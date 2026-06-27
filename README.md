@@ -1,8 +1,8 @@
-# Keen Keeper - Relationship Manager App
+# BondTrace - Relationship Manager App
 
-![Keen Keeper Screenshot](./public/assets/keenkeeper.png)
+![BondTrace Screenshot](./public/assets/keenkeeper.png)
 
-Keen Keeper is a relationship management app that helps users stay consistently
+BondTrace is a relationship management app that helps users stay consistently
 connected with the people who matter most, turning communication habits into
 measurable, visual insights.
 
@@ -22,10 +22,10 @@ measurable, visual insights.
 
 ## 👥 Who Is It For?
 
-Keen Keeper is built for **remote workers** who struggle to stay connected
-across time zones, **socially conscious individuals** who want to be intentional
-about their relationships, and anyone who has ever realized too late that they
-have drifted from someone they care about.
+BondTrace is built for **remote workers** who struggle to stay connected across
+time zones, **socially conscious individuals** who want to be intentional about
+their relationships, and anyone who has ever realized too late that they have
+drifted from someone they care about.
 
 ## 🛠️ Tech Stack
 
