@@ -1,6 +1,6 @@
 # BondTrace - Relationship Manager App
 
-![BondTrace Screenshot](./public/assets/keenkeeper.png)
+![BondTrace Screenshot](./public/assets/bondtrace.png)
 
 BondTrace is a relationship management app that helps users stay consistently
 connected with the people who matter most, turning communication habits into
