@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LogoImg from '../assets/logo.png';
+import Logo from './Logo';
 import { Link, NavLink } from 'react-router';
 import { FaHome } from 'react-icons/fa';
 import { CiViewTimeline } from 'react-icons/ci';
@@ -10,13 +10,13 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
     <nav className="bg-white shadow">
-      <div className="flex justify-between items-center py-4 container mx-auto px-4">
-        <img src={LogoImg} alt="Logo" className="w-24" />
+      <div className="flex justify-between items-center py-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Logo />
         <button
           className="md:hidden text-green-600 text-3xl transition-transform duration-300 active:scale-90"
           onClick={() => setOpen(!open)}
         >
-          <RxHamburgerMenu className={`transition-all duration-200`} />
+          <RxHamburgerMenu className="transition-all duration-200" />
         </button>
 
         <ul
