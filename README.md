@@ -39,5 +39,5 @@ drifted from someone they care about.
 
 ## 🔗 Links
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://keeen.netlify.app)
-[![Client Repo](https://img.shields.io/badge/Client_Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tawchifulislam/KEEN)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://bondtrace.netlify.app)
+[![Client Repo](https://img.shields.io/badge/Client_Repo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tawchifulislam/BondTrace)
