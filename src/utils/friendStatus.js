@@ -27,5 +27,9 @@ export const getDerivedFriendInfo = friend => {
   const daysSinceContact = getDaysSinceContact(friend.last_contact_date);
   const status = getStatus(daysSinceContact, friend.goal);
   const nextDueDate = getNextDueDate(friend.last_contact_date, friend.goal);
-  return { daysSinceContact, status, nextDueDate };
+  return {
+    days_since_contact: daysSinceContact,
+    status,
+    next_due_date: nextDueDate,
+  };
 };

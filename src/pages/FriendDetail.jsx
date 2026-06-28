@@ -24,7 +24,7 @@ import {
 const FriendDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getFriendById, loading } = useFriendsContext();
+  const { getFriendById, loading, markContacted } = useFriendsContext();
   const friend = getFriendById(id);
 
   const [interactions, setInteractions] = useState(() => {
@@ -66,6 +66,8 @@ const FriendDetail = () => {
     setInteractions(updated);
     const oldEntries = JSON.parse(localStorage.getItem('timeline') || '[]');
     localStorage.setItem('timeline', JSON.stringify([...oldEntries, newEntry]));
+
+    markContacted(friend.id);
 
     const toastStyle = { background: '#244D3F', color: '#fff' };
     const icons = {

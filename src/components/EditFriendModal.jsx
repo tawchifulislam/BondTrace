@@ -10,11 +10,11 @@ const toFormState = friend => ({
   bio: friend?.bio || '',
   tags: friend?.tags?.join(', ') || '',
   goal: friend?.goal || 14,
-  next_due_date: friend?.next_due_date || '',
 });
 
 const EditFriendModal = ({ friend }) => {
   const { updateFriend } = useFriendsContext();
+  // initialize form from friend; when friend changes we remount the dialog (see key on dialog)
   const [form, setForm] = useState(() => toFormState(friend));
 
   const handleChange = e => {
@@ -44,7 +44,6 @@ const EditFriendModal = ({ friend }) => {
         .map(t => t.trim())
         .filter(Boolean),
       goal: Number(form.goal) || 14,
-      next_due_date: form.next_due_date || friend.next_due_date,
     });
 
     toast.success('Profile updated');
@@ -54,7 +53,7 @@ const EditFriendModal = ({ friend }) => {
   if (!friend) return null;
 
   return createPortal(
-    <dialog id="edit_friend_modal" className="modal">
+    <dialog id="edit_friend_modal" className="modal" key={friend.id}>
       <div className="modal-box rounded-2xl">
         <h3 className="font-bold text-lg text-gray-900 mb-4">
           Edit {friend.name}'s Profile
@@ -121,33 +120,21 @@ const EditFriendModal = ({ friend }) => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="text-xs font-medium text-gray-500">
-                Contact Goal (days)
-              </label>
-              <input
-                type="number"
-                name="goal"
-                min={1}
-                value={form.goal}
-                onChange={handleChange}
-                className="input input-bordered w-full mt-1 rounded-lg"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-medium text-gray-500">
-                Next Due Date
-              </label>
-              <input
-                type="date"
-                name="next_due_date"
-                value={form.next_due_date}
-                onChange={handleChange}
-                className="input input-bordered w-full mt-1 rounded-lg"
-              />
-            </div>
+          <div>
+            <label className="text-xs font-medium text-gray-500">
+              Contact Goal (days)
+            </label>
+            <input
+              type="number"
+              name="goal"
+              min={1}
+              value={form.goal}
+              onChange={handleChange}
+              className="input input-bordered w-full mt-1 rounded-lg"
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              Next due date will be calculated automatically based on this goal.
+            </p>
           </div>
 
           <div className="modal-action mt-5">

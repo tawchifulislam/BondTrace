@@ -19,7 +19,13 @@ const migrateLegacyFriend = friend => {
 
 const seedFriendsIfNeeded = async () => {
   const existing = localStorage.getItem(STORAGE_KEY);
-  if (existing) return JSON.parse(existing);
+
+  if (existing) {
+    const parsed = JSON.parse(existing);
+    const migrated = parsed.map(migrateLegacyFriend);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+    return migrated;
+  }
 
   const res = await fetch('/friends.json');
   const data = await res.json();
