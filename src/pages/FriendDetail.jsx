@@ -3,7 +3,13 @@ import { useParams, useNavigate } from 'react-router';
 import { IoIosCall, IoMdText } from 'react-icons/io';
 import { CiVideoOn } from 'react-icons/ci';
 import { MdOutlineSnooze, MdArchive, MdDelete } from 'react-icons/md';
-import { HiOutlineMail, HiOutlineArrowLeft } from 'react-icons/hi';
+import {
+  HiOutlineMail,
+  HiOutlineArrowLeft,
+  HiOutlineCalendar,
+  HiOutlineFlag,
+  HiOutlineClock,
+} from 'react-icons/hi';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import toast, { Toaster } from 'react-hot-toast';
 import { useFriendsContext } from '../context/FriendsContext';
@@ -78,133 +84,128 @@ const FriendDetail = () => {
     <div className="min-h-screen bg-[#f8fafc]">
       <Toaster position="top-center" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#244D3F] transition-colors mb-6"
-        >
-          <HiOutlineArrowLeft /> Back
-        </button>
+      <div className="bg-linear-to-b from-white to-[#f8fafc] border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#244D3F] transition-colors mb-6"
+          >
+            <HiOutlineArrowLeft /> Back
+          </button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 items-start">
-          <div className="space-y-5 lg:sticky lg:top-24">
-            <div className="bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-sm">
-              <img
-                src={friend.picture}
-                alt={friend.name}
-                className="w-24 h-24 rounded-full mx-auto mb-4 object-cover ring-4 ring-[#244D3F]/10"
-              />
-              <h1 className="font-bold text-gray-900 text-xl">{friend.name}</h1>
-
-              <div className="flex flex-wrap gap-1.5 justify-center mt-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+            <img
+              src={friend.picture}
+              alt={friend.name}
+              className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover ring-4 ring-white shadow-md mx-auto sm:mx-0"
+            />
+            <div className="text-center sm:text-left flex-1">
+              <h1 className="font-bold text-gray-900 text-2xl sm:text-3xl">
+                {friend.name}
+              </h1>
+              <p className="text-sm text-gray-500 mt-1 max-w-xl">
+                {friend.bio}
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center sm:justify-start mt-3">
                 <span
-                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${getStatusColor(friend.status)}`}
+                  className={`text-xs font-semibold px-3 py-1 rounded-full ${getStatusColor(friend.status)}`}
                 >
                   {friend.status}
                 </span>
                 {friend.tags.map(tag => (
                   <span
                     key={tag}
-                    className="text-xs font-medium bg-gray-100 text-gray-600 px-2.5 py-1 rounded-full"
+                    className="text-xs font-medium bg-gray-100 text-gray-600 px-3 py-1 rounded-full"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-
-              <p className="text-sm text-gray-500 italic mt-4 leading-relaxed">
-                "{friend.bio}"
-              </p>
-
-              <a
-                href={`mailto:${friend.email}`}
-                className="flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-[#244D3F] mt-4 transition-colors"
-              >
-                <HiOutlineMail /> {friend.email}
-              </a>
             </div>
 
-            <div className="bg-white border border-gray-100 rounded-2xl shadow-sm divide-y divide-gray-100 overflow-hidden">
-              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                <MdOutlineSnooze className="text-base" /> Snooze 2 Weeks
-              </button>
-              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                <MdArchive className="text-base" /> Archive
-              </button>
-              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
-                <MdDelete className="text-base" /> Delete
-              </button>
-            </div>
+            <a
+              href={`mailto:${friend.email}`}
+              className="hidden md:flex items-center gap-2 text-sm text-gray-500 hover:text-[#244D3F] border border-gray-200 rounded-full px-4 py-2 transition-colors self-start"
+            >
+              <HiOutlineMail /> Email
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+          <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col gap-2">
+            <span className="w-9 h-9 rounded-full bg-[#244D3F]/10 text-[#244D3F] flex items-center justify-center">
+              <HiOutlineClock />
+            </span>
+            <p className="text-xl font-bold text-gray-900">
+              {friend.days_since_contact}d
+            </p>
+            <p className="text-xs text-gray-500">Since Last Contact</p>
           </div>
 
-          <div className="space-y-5">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm">
-                <p className="text-2xl font-bold text-[#244D3F]">
-                  {friend.goal}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Goal (Days)</p>
-              </div>
-              <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm">
-                <p className="text-2xl font-bold text-[#244D3F]">
-                  {friend.next_due_date}
-                </p>
-                <p className="text-xs text-gray-500 mt-1">Next Due</p>
-              </div>
-            </div>
+          <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col gap-2">
+            <span className="w-9 h-9 rounded-full bg-[#7E35E1]/10 text-[#7E35E1] flex items-center justify-center">
+              <HiOutlineFlag />
+            </span>
+            <p className="text-xl font-bold text-gray-900">{friend.goal}d</p>
+            <p className="text-xs text-gray-500">Contact Goal</p>
+          </div>
 
-            <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-semibold text-gray-900">
-                  Relationship Goal
-                </h3>
-                <button className="text-xs font-medium border border-gray-200 rounded-full px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 transition-colors">
-                  Edit
-                </button>
-              </div>
-              <p className="text-sm text-gray-500">
-                Connect every{' '}
-                <span className="font-semibold text-gray-900">
-                  {friend.goal} days
-                </span>
-              </p>
-            </div>
+          <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm flex flex-col gap-2 col-span-2 sm:col-span-1">
+            <span className="w-9 h-9 rounded-full bg-[#37A163]/10 text-[#37A163] flex items-center justify-center">
+              <HiOutlineCalendar />
+            </span>
+            <p className="text-xl font-bold text-gray-900">
+              {friend.next_due_date}
+            </p>
+            <p className="text-xs text-gray-500">Next Due Date</p>
+          </div>
+        </div>
 
-            <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
               <h3 className="font-semibold text-gray-900 mb-4">
                 Quick Check-In
               </h3>
               <div className="grid grid-cols-3 gap-3">
                 <button
                   onClick={() => addInteraction('Call')}
-                  className="flex flex-col items-center gap-2 py-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-[#244D3F] hover:text-white text-gray-700 transition-colors"
+                  className="flex flex-col items-center gap-2 py-5 rounded-xl border border-gray-100 bg-gray-50 hover:bg-[#244D3F] hover:text-white text-gray-700 transition-colors"
                 >
-                  <IoIosCall size={20} />{' '}
+                  <IoIosCall size={22} />{' '}
                   <span className="text-xs font-medium">Call</span>
                 </button>
                 <button
                   onClick={() => addInteraction('Text')}
-                  className="flex flex-col items-center gap-2 py-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-[#244D3F] hover:text-white text-gray-700 transition-colors"
+                  className="flex flex-col items-center gap-2 py-5 rounded-xl border border-gray-100 bg-gray-50 hover:bg-[#7E35E1] hover:text-white text-gray-700 transition-colors"
                 >
-                  <IoMdText size={20} />{' '}
+                  <IoMdText size={22} />{' '}
                   <span className="text-xs font-medium">Text</span>
                 </button>
                 <button
                   onClick={() => addInteraction('Video')}
-                  className="flex flex-col items-center gap-2 py-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-[#244D3F] hover:text-white text-gray-700 transition-colors"
+                  className="flex flex-col items-center gap-2 py-5 rounded-xl border border-gray-100 bg-gray-50 hover:bg-[#37A163] hover:text-white text-gray-700 transition-colors"
                 >
-                  <CiVideoOn size={20} />{' '}
+                  <CiVideoOn size={22} />{' '}
                   <span className="text-xs font-medium">Video</span>
                 </button>
               </div>
             </div>
 
-            <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-4">
-                Recent Interactions
-              </h3>
+            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-gray-900">
+                  Recent Interactions
+                </h3>
+                <span className="text-xs text-gray-400">
+                  {interactions.length} total
+                </span>
+              </div>
               {interactions.length === 0 ? (
-                <p className="text-sm text-gray-400 text-center py-8">
+                <p className="text-sm text-gray-400 text-center py-10">
                   No interactions yet.
                 </p>
               ) : (
@@ -222,10 +223,10 @@ const FriendDetail = () => {
                             <IoIosCall className="text-[#244D3F]" />
                           )}
                           {entry.type === 'Text' && (
-                            <IoMdText className="text-[#244D3F]" />
+                            <IoMdText className="text-[#7E35E1]" />
                           )}
                           {entry.type === 'Video' && (
-                            <CiVideoOn className="text-[#244D3F]" />
+                            <CiVideoOn className="text-[#37A163]" />
                           )}
                           {entry.type}
                         </span>
@@ -237,6 +238,44 @@ const FriendDetail = () => {
                 </div>
               )}
             </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-semibold text-gray-900">
+                  Relationship Goal
+                </h3>
+                <button className="text-xs font-medium border border-gray-200 rounded-full px-3.5 py-1.5 text-gray-600 hover:bg-gray-50 transition-colors">
+                  Edit
+                </button>
+              </div>
+              <p className="text-sm text-gray-500">
+                Connect every{' '}
+                <span className="font-semibold text-gray-900">
+                  {friend.goal} days
+                </span>
+              </p>
+            </div>
+
+            <div className="bg-white border border-gray-100 rounded-2xl shadow-sm divide-y divide-gray-100 overflow-hidden">
+              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                <MdOutlineSnooze className="text-base" /> Snooze 2 Weeks
+              </button>
+              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                <MdArchive className="text-base" /> Archive
+              </button>
+              <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+                <MdDelete className="text-base" /> Delete
+              </button>
+            </div>
+
+            <a
+              href={`mailto:${friend.email}`}
+              className="md:hidden flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-[#244D3F] border border-gray-200 rounded-full px-4 py-3 transition-colors"
+            >
+              <HiOutlineMail /> {friend.email}
+            </a>
           </div>
         </div>
       </div>
