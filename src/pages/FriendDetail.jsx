@@ -15,7 +15,11 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import toast, { Toaster } from 'react-hot-toast';
 import { useFriendsContext } from '../context/FriendsContext';
 import EditFriendModal from '../components/EditFriendModal';
-import { openEditFriendModal } from '../utils/modalControls';
+import DeleteFriendModal from '../components/DeleteFriendModal';
+import {
+  openEditFriendModal,
+  openDeleteFriendModal,
+} from '../utils/modalControls';
 
 const FriendDetail = () => {
   const { id } = useParams();
@@ -277,7 +281,10 @@ const FriendDetail = () => {
                 <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                   <MdArchive className="text-base" /> Archive
                 </button>
-                <button className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+                <button
+                  onClick={openDeleteFriendModal}
+                  className="w-full flex items-center gap-3 px-5 py-3.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                >
                   <MdDelete className="text-base" /> Delete
                 </button>
               </div>
@@ -304,6 +311,7 @@ const FriendDetail = () => {
       </div>
 
       <EditFriendModal friend={friend} />
+      <DeleteFriendModal friend={friend} />
     </>
   );
 };
