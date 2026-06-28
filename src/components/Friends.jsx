@@ -31,12 +31,12 @@ const Friends = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
       <h2 className="text-xl font-bold mb-4 text-black">Your Friends</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {friends.map(friend => (
           <Link to={`/friend/${friend.id}`} key={friend.id}>
-            <div className="bg-white shadow rounded p-4 text-center">
+            <div className="bg-white shadow rounded p-4 text-center h-full">
               <img
                 src={friend.picture}
                 alt={friend.name}
@@ -46,7 +46,7 @@ const Friends = () => {
               <p className="text-sm text-black">
                 {friend.days_since_contact}d ago
               </p>
-              <div className="flex justify-center gap-2 mb-2">
+              <div className="flex flex-wrap justify-center gap-2 mb-2">
                 {friend.tags.map((tag, ind) => (
                   <span
                     key={ind}

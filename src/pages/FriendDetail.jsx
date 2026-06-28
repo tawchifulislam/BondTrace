@@ -73,9 +73,9 @@ const FriendDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f0] py-10 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#f5f5f0] py-10">
       <Toaster position="top-center" />
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="bg-white border rounded-lg p-6 text-center shadow-sm">
             <img
