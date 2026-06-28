@@ -12,7 +12,7 @@ measurable, visual insights.
   with the contact's name in a visual timeline, giving users a clear picture of
   who they have been in touch with and when.
 - **Interaction Filter** - Users can filter their timeline by interaction type -
-  audio call, video call, or text — to instantly see their communication history
+  audio call, video call, or text - to instantly see their communication history
   with each person.
 - **Smart Reminders** - Users can set reminders to reach out before important
   moments, ensuring meaningful relationships are nurtured before it is too late.
