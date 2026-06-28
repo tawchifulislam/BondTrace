@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import Logo from './Logo';
+import AddFriendModal from './AddFriendModal';
+import { openAddFriendModal } from '../utils/modalControls';
 import { NavLink } from 'react-router';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaPlus } from 'react-icons/fa';
 import { CiViewTimeline } from 'react-icons/ci';
 import { IoIosStats } from 'react-icons/io';
 import { HiMenu, HiX } from 'react-icons/hi';
-import { FaPlus } from 'react-icons/fa';
-import AddFriendModal from './AddFriendModal';
 
 const navItems = [
-  { to: '/', label: 'Home', icon: FaHome },
-  { to: '/timeline', label: 'Timeline', icon: CiViewTimeline },
-  { to: '/stats', label: 'Stats', icon: IoIosStats },
+  { to: '/', label: 'Home', Icon: FaHome },
+  { to: '/timeline', label: 'Timeline', Icon: CiViewTimeline },
+  { to: '/stats', label: 'Stats', Icon: IoIosStats },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const handleAddFriendClick = () => {
+    setOpen(false);
+    openAddFriendModal();
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
@@ -24,10 +29,10 @@ const Navbar = () => {
           <Logo />
 
           <div className="hidden md:flex items-center gap-1 bg-gray-100/70 rounded-full p-1">
-            {navItems.map(({ to, label, icon: Icon }) => (
+            {navItems.map(item => (
               <NavLink
-                key={to}
-                to={to}
+                key={item.to}
+                to={item.to}
                 className={({ isActive }) =>
                   `flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                     isActive
@@ -36,12 +41,17 @@ const Navbar = () => {
                   }`
                 }
               >
-                <Icon size={15} /> {label}
+                <item.Icon size={15} /> {item.label}
               </NavLink>
             ))}
           </div>
 
-          <AddFriendModal />
+          <button
+            onClick={handleAddFriendClick}
+            className="hidden md:flex items-center gap-2 bg-[#244D3F] hover:bg-[#1b3a2f] text-white text-sm font-medium px-4 py-2 rounded-full transition-colors"
+          >
+            <FaPlus size={12} /> Add Friend
+          </button>
 
           <button
             className="md:hidden text-[#244D3F] text-2xl"
@@ -59,10 +69,10 @@ const Navbar = () => {
         }`}
       >
         <div className="px-4 pb-4 flex flex-col gap-1 bg-white border-t border-gray-100">
-          {navItems.map(({ to, label, icon: Icon }) => (
+          {navItems.map(item => (
             <NavLink
-              key={to}
-              to={to}
+              key={item.to}
+              to={item.to}
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
@@ -72,12 +82,18 @@ const Navbar = () => {
                 }`
               }
             >
-              <Icon size={16} /> {label}
+              <item.Icon size={16} /> {item.label}
             </NavLink>
           ))}
-          <AddFriendModal />
+          <button
+            onClick={handleAddFriendClick}
+            className="mt-2 flex items-center justify-center gap-2 bg-[#244D3F] text-white text-sm font-medium px-4 py-3 rounded-lg"
+          >
+            <FaPlus size={12} /> Add Friend
+          </button>
         </div>
       </div>
+      <AddFriendModal />
     </nav>
   );
 };
