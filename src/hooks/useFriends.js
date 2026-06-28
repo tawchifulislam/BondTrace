@@ -1,7 +1,21 @@
 import { useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { getDerivedFriendInfo } from '../utils/friendStatus';
 
 const STORAGE_KEY = 'friends';
+
+const migrateLegacyFriend = friend => {
+  if (friend.last_contact_date) return friend; // already migrated
+
+  const days = friend.days_since_contact ?? 0;
+  const lastContact = new Date();
+  lastContact.setDate(lastContact.getDate() - days);
+
+  return {
+    ...friend,
+    last_contact_date: lastContact.toISOString().split('T')[0],
+  };
+};
 
 const seedFriendsIfNeeded = async () => {
   const existing = localStorage.getItem(STORAGE_KEY);
@@ -9,8 +23,9 @@ const seedFriendsIfNeeded = async () => {
 
   const res = await fetch('/friends.json');
   const data = await res.json();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  return data;
+  const migrated = data.map(migrateLegacyFriend);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+  return migrated;
 };
 
 export const useFriends = () => {
@@ -28,8 +43,17 @@ export const useFriends = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
   }, []);
 
+  const enrichedFriends = friends.map(f => ({
+    ...f,
+    ...getDerivedFriendInfo(f),
+  }));
+
   const getFriendById = useCallback(
-    id => friends.find(f => String(f.id) === String(id)),
+    id => {
+      const found = friends.find(f => String(f.id) === String(id));
+      if (!found) return null;
+      return { ...found, ...getDerivedFriendInfo(found) };
+    },
     [friends],
   );
 
@@ -37,11 +61,9 @@ export const useFriends = () => {
     friendData => {
       const newFriend = {
         id: uuidv4(),
-        days_since_contact: 0,
-        status: 'on-track',
+        last_contact_date: new Date().toISOString().split('T')[0],
         tags: [],
         goal: 14,
-        next_due_date: new Date().toISOString().split('T')[0],
         ...friendData,
       };
       const updated = [...friends, newFriend];
@@ -69,12 +91,22 @@ export const useFriends = () => {
     [friends, persist],
   );
 
+  const markContacted = useCallback(
+    id => {
+      updateFriend(id, {
+        last_contact_date: new Date().toISOString().split('T')[0],
+      });
+    },
+    [updateFriend],
+  );
+
   return {
-    friends,
+    friends: enrichedFriends,
     loading,
     getFriendById,
     addFriend,
     updateFriend,
     deleteFriend,
+    markContacted,
   };
 };
