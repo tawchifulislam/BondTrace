@@ -6,6 +6,7 @@ import { CiViewTimeline } from 'react-icons/ci';
 import { IoIosStats } from 'react-icons/io';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { FaPlus } from 'react-icons/fa';
+import AddFriendModal from './AddFriendModal';
 
 const navItems = [
   { to: '/', label: 'Home', icon: FaHome },
@@ -22,7 +23,6 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 sm:h-18">
           <Logo />
 
-          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1 bg-gray-100/70 rounded-full p-1">
             {navItems.map(({ to, label, icon: Icon }) => (
               <NavLink
@@ -41,12 +41,8 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <button className="hidden md:flex items-center gap-2 bg-[#244D3F] hover:bg-[#1b3a2f] text-white text-sm font-medium px-4 py-2 rounded-full transition-colors">
-            <FaPlus size={12} /> Add Friend
-          </button>
+          <AddFriendModal />
 
-          {/* Mobile toggle */}
           <button
             className="md:hidden text-[#244D3F] text-2xl"
             onClick={() => setOpen(!open)}
@@ -57,7 +53,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           open ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
@@ -80,9 +75,7 @@ const Navbar = () => {
               <Icon size={16} /> {label}
             </NavLink>
           ))}
-          <button className="mt-2 flex items-center justify-center gap-2 bg-[#244D3F] text-white text-sm font-medium px-4 py-3 rounded-lg">
-            <FaPlus size={12} /> Add Friend
-          </button>
+          <AddFriendModal />
         </div>
       </div>
     </nav>

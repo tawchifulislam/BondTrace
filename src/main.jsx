@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import FriendDetail from './pages/FriendDetail';
 import Timeline from './pages/Timeline';
 import Stats from './pages/Stats';
+import { FriendsProvider } from './context/FriendsContext';
 
 const router = createBrowserRouter([
   {
