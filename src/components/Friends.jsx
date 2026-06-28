@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { useFriendsContext } from '../context/FriendsContext';
 
 const Friends = () => {
-  const [friends, setFriends] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/friends.json')
-      .then(res => res.json())
-      .then(data => {
-        setFriends(data);
-        setLoading(false);
-      });
-  }, []);
+  const { friends, loading } = useFriendsContext();
 
   const getStatusColor = status => {
     if (status === 'on-track') return 'bg-[#244D3F] text-white';

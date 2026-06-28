@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Friends from '../components/Friends';
 import {
   HiUsers,
@@ -6,11 +6,12 @@ import {
   HiExclamationCircle,
   HiChatAlt2,
 } from 'react-icons/hi';
+import { useFriendsContext } from '../context/FriendsContext';
 
 const Home = () => {
-  const [friends, setFriends] = useState([]);
-  const [interactionCount] = useState(() => {
-    if (typeof window === 'undefined') return 0;
+  const { friends } = useFriendsContext();
+
+  const interactionCount = (() => {
     const saved = JSON.parse(localStorage.getItem('timeline') || '[]');
     const now = new Date();
     return saved.filter(e => {
@@ -19,13 +20,7 @@ const Home = () => {
         d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
       );
     }).length;
-  });
-
-  useEffect(() => {
-    fetch('/friends.json')
-      .then(res => res.json())
-      .then(data => setFriends(data));
-  }, []);
+  })();
 
   const onTrack = friends.filter(f => f.status === 'on-track').length;
   const needAttention = friends.filter(

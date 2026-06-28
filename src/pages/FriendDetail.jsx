@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { IoIosCall, IoMdText } from 'react-icons/io';
 import { CiVideoOn } from 'react-icons/ci';
 import { MdOutlineSnooze, MdArchive, MdDelete } from 'react-icons/md';
 import { HiOutlineMail, HiOutlineArrowLeft } from 'react-icons/hi';
-import toast, { Toaster } from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import toast, { Toaster } from 'react-hot-toast';
+import { useFriendsContext } from '../context/FriendsContext';
 
 const FriendDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [friend, setFriend] = useState(null);
-  const [interactions, setInteractions] = useState([]);
+  const { getFriendById, loading } = useFriendsContext();
+  const friend = getFriendById(id);
 
-  useEffect(() => {
-    fetch('/friends.json')
-      .then(res => res.json())
-      .then(data => {
-        const found = data.find(f => f.id === parseInt(id));
-        setFriend(found);
-        const saved = JSON.parse(localStorage.getItem('timeline') || '[]');
-        const filtered = saved.filter(e => e.friend === found?.name);
-        setInteractions(filtered);
-      });
-  }, [id]);
+  const [interactions, setInteractions] = useState(() => {
+    const saved = JSON.parse(localStorage.getItem('timeline') || '[]');
+    return saved.filter(e => e.friend === friend?.name);
+  });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
+        <AiOutlineLoading3Quarters className="animate-spin text-3xl text-[#244D3F]" />
+      </div>
+    );
+  }
 
   if (!friend) {
     return (
       <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
-        <AiOutlineLoading3Quarters className="animate-spin text-3xl text-[#244D3F]" />
+        <p className="text-sm text-gray-400">Friend not found.</p>
       </div>
     );
   }
@@ -85,7 +87,6 @@ const FriendDetail = () => {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6 items-start">
-          {/* Left Column */}
           <div className="space-y-5 lg:sticky lg:top-24">
             <div className="bg-white border border-gray-100 rounded-2xl p-6 text-center shadow-sm">
               <img
@@ -136,7 +137,6 @@ const FriendDetail = () => {
             </div>
           </div>
 
-          {/* Right Column */}
           <div className="space-y-5">
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm">
